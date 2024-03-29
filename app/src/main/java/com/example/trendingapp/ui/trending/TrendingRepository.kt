@@ -4,5 +4,5 @@ import com.example.trendingapp.api.APIService
 import javax.inject.Inject
 
 class TrendingRepository @Inject constructor(private val apiService: APIService) {
-     fun getRepositories() = apiService.getRepositories("stars", "100")
+     suspend fun getRepositories() = apiService.getRepositories("stars", "100")
 }

@@ -21,11 +21,4 @@ object AppModule {
     fun provideAPIService(retrofit: Retrofit) : APIService =
         retrofit.create(APIService::class.java)
 
-//     return Retrofit.Builder()
-//            .baseUrl(BuildConfig.SERVER_URL)
-//            .client(okHttpClient)
-//            .addConverterFactory(gsonConverterFactory)
-//            .addCallAdapterFactory(rxJava2CallAdapterFactory)
-//            .build()
-
 }

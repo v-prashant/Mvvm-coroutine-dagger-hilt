@@ -4,21 +4,22 @@ import com.example.trendingapp.api.Status
 import androidx.lifecycle.MutableLiveData
 import com.example.trendingapp.api.Resource
 import com.example.trendingapp.network.BaseResponse
+import retrofit2.Response
 
-fun <T> MutableLiveData<Resource<T>>.setSuccess(data: T) {
-    (data as BaseResponse).let {
+fun <T> MutableLiveData<Resource<T>>.setSuccess(data: Response<T>) {
+    (data.body() as BaseResponse).let {
         if (it.responseStatus?.status?.equals("SUCCESS") == true) {
             postValue(
                 Resource(
                     Status.SUCCESS,
-                    data
+                    data.body()
                 )
             )
         } else {
             postValue(
                 Resource(
                     Status.SUCCESS,
-                    data
+                    data.body()
                 )
             )
 

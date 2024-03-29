@@ -25,9 +25,6 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
     @Inject
     lateinit var viewModel: V
 
-    @Inject
-    lateinit var gson: Gson
-
     lateinit var binding: B
         private set
 

@@ -1,5 +1,6 @@
 package com.example.trendingapp.ui.trending
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.trendingapp.api.Resource
@@ -10,6 +11,7 @@ import com.example.trendingapp.utils.extension_functions.setLoading
 import com.example.trendingapp.utils.extension_functions.setSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import javax.inject.Inject
 
 class TrendingVM @Inject constructor(val repository: TrendingRepository) :
@@ -21,10 +23,11 @@ class TrendingVM @Inject constructor(val repository: TrendingRepository) :
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.getRepositories()
-                getRepositoriesLiveData.setSuccess(response.blockingGet())
+                getRepositoriesLiveData.setSuccess(response)
             } catch (exception: Exception) {
                 val response = GetRepositoriesResponse()
                 getRepositoriesLiveData.setError(response)
+                Log.d("NETWORK_EXCEPTION", exception.stackTraceToString())
             }
         }
     }
