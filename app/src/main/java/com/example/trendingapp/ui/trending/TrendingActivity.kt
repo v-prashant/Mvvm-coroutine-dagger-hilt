@@ -57,7 +57,7 @@ class TrendingActivity : BaseActivity<TrendingVM, ActivityTrendingBinding>() {
     }
 
     private fun observeData() {
-        viewModel.getRepositoriesLiveData.observe(this){
+        viewModel.getRepositoriesLiveData.observe(this) {
             when(it.status){
                 Status.LOADING->{
                     showSkeltonLoading()
@@ -66,16 +66,21 @@ class TrendingActivity : BaseActivity<TrendingVM, ActivityTrendingBinding>() {
                     getRepositoriesResponse(it.data)
                     hideSkeltonLoading()
                 }
-                Status.ERROR->{
-                    showErrorMessage(it.data.toString())
+                Status.FAILURE->{
+                    showErrorMessage(it.message)
                     hideSkeltonLoading()
                 }
-                Status.THROWABLE -> {
+                Status.ERROR -> {
                     showNoInternetMessage()
                     hideSkeltonLoading()
                 }
             }
         }
+
+//        viewModel.getRepositoriesLiveData.observeLiveData {
+//            getRepositoriesResponse(it)
+//        }
+
     }
 
     private fun showSkeltonLoading() {

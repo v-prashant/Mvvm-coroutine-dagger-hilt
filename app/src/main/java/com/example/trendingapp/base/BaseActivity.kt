@@ -5,7 +5,6 @@ import com.example.trendingapp.api.Status
 import com.example.trendingapp.utils.ProgressUtil
 import com.example.trendingapp.utils.ToastUtils
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.LayoutRes
@@ -13,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.MutableLiveData
-import com.example.trendingapp.network.BaseResponse
-import com.google.gson.Gson
 import javax.inject.Inject
 
 /**
@@ -60,12 +57,9 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         }
     }
 
-    fun showErrorMessage(message: String) {
-        showToastMessage(message, ToastUtils.ToastType.ERROR, ToastUtils.HeaderToastType.ERROR)
-    }
-
-    fun showErrorMessage(response: BaseResponse.ResponseStatus) {
-        showErrorMessage(response.message)
+    fun showErrorMessage(message: String?) {
+        if(message != null)
+            showToastMessage(message, ToastUtils.ToastType.ERROR, ToastUtils.HeaderToastType.ERROR)
     }
 
     fun showSuccessMessage(message: String) {
@@ -79,37 +73,28 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
     }
 
     fun <T> MutableLiveData<Resource<T>>.observeLiveData(
-        success: (t: T) -> Unit, error: ((e: BaseResponse.ResponseStatus) -> Unit)? = null,
+        success: (t: T) -> Unit
     ) {
         observe(this@BaseActivity) {
             it?.let {
                 when (it.status) {
                     Status.LOADING -> {
-                        showProgress(it.message)
+                        showProgress()
                     }
                     Status.SUCCESS -> {
+                        hideProgress()
                         it.data?.let { response ->
                             success.invoke(response)
                         }
                     }
-                    Status.ERROR -> {
+                    Status.FAILURE, Status.ERROR -> {
                         hideProgress()
-                        (it.data as BaseResponse).responseStatus?.let { it ->
-                            if (it.code == "11016" || it.code == "11018") {
-                                showErrorMessage(it.message)
-                            } else if (error == null) {
-                                showErrorMessage(it.message)
-                            }
-                            error?.invoke(it)
-                        }
-                    }
-                    Status.THROWABLE -> {
-                        hideProgress()
-                        val errorBody = it.throwable
-                        showErrorMessage(errorBody?.message.toString())
+                        showErrorMessage(it.message)
                     }
                 }
             }
         }
     }
+
+
 }

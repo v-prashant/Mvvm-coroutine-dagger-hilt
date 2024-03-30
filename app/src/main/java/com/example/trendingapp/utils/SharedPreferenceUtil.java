@@ -2,27 +2,17 @@ package com.example.trendingapp.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.widget.ArrayAdapter;
 
-import com.example.trendingapp.ui.trending.TrendingItems;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.securepreferences.SecurePreferences;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Set;
 
 public final class SharedPreferenceUtil {
     // Constants for Keys
 
-    public static final String DOMAIN_URL = "DOMAIN_URL";
-    public static final String DISABLE_SSL_PINNIG = "DISABLE_SSL_PINNIG";
-    public static final String AUTHORIZATION_TOKEN = "AUTHORIZATION_TOKEN";
-    public static final String LOCATION_LATITUDE = "LATITUDE";
-    public static final String LOCATION_LONGITUDE = "LONGITUDE";
     public static final String TRENDING_DATA = "TRENDING_DATA";
     public static final String TRENDING_DATA_TS = "TRENDING_DATA_TS";
 

@@ -1,9 +1,8 @@
 package com.example.trendingapp.network.response
 
-import com.example.trendingapp.network.BaseResponse
 import java.util.ArrayList
 
-class GetRepositoriesResponse : BaseResponse() {
+class GetRepositoriesResponse {
     var items: ArrayList<Item>? = null
 
     inner class Item {

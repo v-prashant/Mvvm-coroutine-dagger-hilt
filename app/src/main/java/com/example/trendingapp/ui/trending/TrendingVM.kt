@@ -8,10 +8,9 @@ import com.example.trendingapp.base.BaseViewModel
 import com.example.trendingapp.network.response.GetRepositoriesResponse
 import com.example.trendingapp.utils.extension_functions.setError
 import com.example.trendingapp.utils.extension_functions.setLoading
-import com.example.trendingapp.utils.extension_functions.setSuccess
+import com.example.trendingapp.utils.extension_functions.setStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 import javax.inject.Inject
 
 class TrendingVM @Inject constructor(val repository: TrendingRepository) :
@@ -23,10 +22,10 @@ class TrendingVM @Inject constructor(val repository: TrendingRepository) :
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.getRepositories()
-                getRepositoriesLiveData.setSuccess(response)
+                getRepositoriesLiveData.setStatus(response)
             } catch (exception: Exception) {
                 val response = GetRepositoriesResponse()
-                getRepositoriesLiveData.setError(response)
+                getRepositoriesLiveData.setError(message = "No Internet Connection")
                 Log.d("NETWORK_EXCEPTION", exception.stackTraceToString())
             }
         }
