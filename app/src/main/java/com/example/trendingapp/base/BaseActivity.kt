@@ -17,22 +17,12 @@ import javax.inject.Inject
 /**
  * Created by Prashant Verma
  */
-abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatActivity(){
-
-    @Inject
-    lateinit var viewModel: V
-
-    lateinit var binding: B
-        private set
-
-    @get:LayoutRes
-    abstract val layoutId: Int
+open class BaseActivity : AppCompatActivity(){
 
     private lateinit var progressDialog: ProgressUtil
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, layoutId)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         initProgress()
     }

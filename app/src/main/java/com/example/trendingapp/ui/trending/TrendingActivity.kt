@@ -2,6 +2,10 @@ package com.example.trendingapp.ui.trending
 
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.room.Insert
 import com.example.trendingapp.R
 import com.example.trendingapp.api.Status
 import com.example.trendingapp.base.BaseActivity
@@ -10,13 +14,21 @@ import com.example.trendingapp.network.response.GetRepositoriesResponse
 import com.example.trendingapp.utils.SharedPreferenceUtil
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 const val EXPIRE_TIME_STAMP = 7200000
 @AndroidEntryPoint
-class TrendingActivity : BaseActivity<TrendingVM, ActivityTrendingBinding>() {
+class TrendingActivity : BaseActivity() {
 
     var dataList = ArrayList<TrendingItems>()
     var storedTime:Long = 0
+    private val binding: ActivityTrendingBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_trending) as ActivityTrendingBinding
+    }
+
+    @Inject
+    lateinit var viewModel: TrendingVM
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCacheSystem()
@@ -131,7 +143,4 @@ class TrendingActivity : BaseActivity<TrendingVM, ActivityTrendingBinding>() {
     private fun initViews() {
 
     }
-
-    override val layoutId: Int
-        get() = R.layout.activity_trending
 }

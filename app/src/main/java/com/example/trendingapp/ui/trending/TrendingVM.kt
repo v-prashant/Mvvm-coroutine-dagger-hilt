@@ -2,9 +2,9 @@ package com.example.trendingapp.ui.trending
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trendingapp.api.Resource
-import com.example.trendingapp.base.BaseViewModel
 import com.example.trendingapp.network.response.GetRepositoriesResponse
 import com.example.trendingapp.utils.extension_functions.setError
 import com.example.trendingapp.utils.extension_functions.setLoading
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TrendingVM @Inject constructor(val repository: TrendingRepository) :
-    BaseViewModel() {
+    ViewModel() {
 
     val getRepositoriesLiveData = MutableLiveData<Resource<GetRepositoriesResponse>>()
     fun getRepositories() {

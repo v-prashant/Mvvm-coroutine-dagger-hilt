@@ -1,9 +1,6 @@
 package com.example.trendingapp.api
 
-import androidx.annotation.Keep
-
-@Keep
-data class Resource<out T> constructor(
+data class Resource<out T>(
     val status: Status,
     val data: T? = null,
     val message: String? = null
